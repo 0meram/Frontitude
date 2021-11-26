@@ -6,14 +6,13 @@ import axios from "axios";
 
 function App() {
 	const [cityError, setCityError] = useState(false);
-	const [daysList, setDaysList] = useState();
-	const [CitiesList, setCitiesList] = useState();
+	const [daysList, setDaysList] = useState([]);
+	const [CitiesList, setCitiesList] = useState([]);
 
 	const cityChange = async (inputChange) => {
 		const res = await axios.post("http://localhost:8000/search/getCity", {
 			inputChange,
 		});
-		console.log('~ res.data', res.data);
 		if (res.data !== "error") {
 			handleCityChange(res.data);
 		} else {

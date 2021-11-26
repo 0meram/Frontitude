@@ -10,40 +10,41 @@ export default function SearchBar({
 	CitiesList,
 	setCitiesList,
 }) {
-	const [input, setInput] = useState();
+	const [text, setText] = useState("h");
+	const newArr = [];
 
 	const citesAutoComplete = async (input) => {
 		const res = await axios.post(
 			"http://localhost:8000/search/getAutoComplete",
 			{ input }
 		);
-		console.log("~ res.data", res.data);
 		if (res.data.name !== "Error") {
-			setCitiesList(res.data);
+			for (let index = 0; index < res.data.length; index++) {
+				newArr.push(res.data[index].LocalizedName);
+			}
+			return setCitiesList(newArr);
 		} else {
 			setCityError(true);
 		}
 	};
 
 	useEffect(() => {
-		citesAutoComplete(input);
-	}, [input]);;
-    console.log('~ input', input);
+		citesAutoComplete(text);
+	}, []);
 
 	return (
-		<div style={{display: "flex", justifyContent:"center"}}>
+		<div style={{ display: "flex", justifyContent: "center" }}>
 			<Autocomplete
-				disablePortal
-				id="combo-box-demo"
-				options={CitiesList || [1,2]}
+				options={CitiesList}
+				autoHighlight
 				sx={{ width: 300 }}
-				renderInput={(params) => <TextField {...params} label="City" />}
-				onInputChange={(e) => {setInput(e.target.value);}}
-				id="standard-basic"
-				label="Search for a city"
-				justify="center"
+				renderInput={(params) => <TextField {...params} />}
+				onInputChange={(e) => {
+					setText(e.target.innerText || e.target.value || "h");
+					citesAutoComplete(e.target.innerText || e.target.value || "h");
+				}}
 			/>
-			<Button onClick={() => cityChange(input)}>search</Button>
+			<Button onClick={() => cityChange(text)}>Search</Button>
 			{error}
 		</div>
 	);

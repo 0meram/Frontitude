@@ -5,7 +5,7 @@ import styles from "./card.css";
 
 const useStyles = makeStyles({
 	root: {
-		width: 175,
+		width: 135,
 		margin: 10,
 		overflow: "hidden",
 	},
@@ -18,11 +18,9 @@ export default function Cards(props) {
 
 	const changeMeasure = () => {
 		setMeasure(!measure);
-		console.log("~ measure", measure);
 	};
 
 	if (!props.weatherData) return "Loading..";
-    console.log('~ props', props);
 
 	return (
 		<div>
@@ -50,8 +48,10 @@ export default function Cards(props) {
 									</h3>
 								) : (
 									<h3>
-										{item.Temperature.Maximum.Value}{" "}
-										{item.Temperature.Maximum.Unit}
+										{Math.floor(
+											(5 / 9) * (item.Temperature.Maximum.Value - 32)
+										)}
+										{" C"}
 									</h3>
 								)}
 							</div>
@@ -59,7 +59,7 @@ export default function Cards(props) {
 					);
 				})}
 			</Grid>
-			<Button onClick={changeMeasure}>Change to C</Button>
+			<Button onClick={changeMeasure}>Change measure</Button>
 		</div>
 	);
 }
