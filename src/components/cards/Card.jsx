@@ -22,6 +22,7 @@ export default function Cards(props) {
 	};
 
 	if (!props.weatherData) return "Loading..";
+    console.log('~ props', props);
 
 	return (
 		<div>
@@ -41,7 +42,6 @@ export default function Cards(props) {
 					return (
 						<Card className={classes.root} key={item.Date}>
 							<div>{item.Day.IconPhrase}</div>
-							<div>{item.Date}</div>
 							<div>
 								{measure ? (
 									<h3>

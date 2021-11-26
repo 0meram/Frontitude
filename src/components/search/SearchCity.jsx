@@ -1,45 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, TextField } from "@material-ui/core";
 import Autocomplete from "@mui/material/Autocomplete";
+import axios from "axios";
 
-
-export default function SearchBar({ cityChange, error, setCityError, CitiesList}) {
+export default function SearchBar({
+	cityChange,
+	error,
+	setCityError,
+	CitiesList,
+	setCitiesList,
+}) {
 	const [input, setInput] = useState();
 
-	return !error ? (
-		<div>
-			<TextField
-				id="standard-basic"
-				label="Search for a city"
-				justify="center"
-				onChange={(e) => setInput(e.target.value)}
-			/>
+	const citesAutoComplete = async (input) => {
+		const res = await axios.post(
+			"http://localhost:8000/search/getAutoComplete",
+			{ input }
+		);
+		console.log("~ res.data", res.data);
+		if (res.data.name !== "Error") {
+			setCitiesList(res.data);
+		} else {
+			setCityError(true);
+		}
+	};
+
+	useEffect(() => {
+		citesAutoComplete(input);
+	}, [input]);;
+    console.log('~ input', input);
+
+	return (
+		<div style={{display: "flex", justifyContent:"center"}}>
 			<Autocomplete
 				disablePortal
 				id="combo-box-demo"
-				options={CitiesList}
+				options={CitiesList || [1,2]}
 				sx={{ width: 300 }}
 				renderInput={(params) => <TextField {...params} label="City" />}
-				onChange={(e) => setInput(e.target.value)}
+				onInputChange={(e) => {setInput(e.target.value);}}
 				id="standard-basic"
 				label="Search for a city"
 				justify="center"
 			/>
 			<Button onClick={() => cityChange(input)}>search</Button>
-		</div>
-	) : (
-		<div>
-			<TextField
-				id="standard-basic"
-				label="Invalid City"
-				error
-				id="standard-error-helper-text"
-				onChange={(e) => {
-					setInput(e.target.value);
-					setCityError(false);
-				}}
-			/>
+			{error}
 		</div>
 	);
 }
-

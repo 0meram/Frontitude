@@ -13,6 +13,7 @@ function App() {
 		const res = await axios.post("http://localhost:8000/search/getCity", {
 			inputChange,
 		});
+		console.log('~ res.data', res.data);
 		if (res.data !== "error") {
 			handleCityChange(res.data);
 		} else {
@@ -24,26 +25,12 @@ function App() {
 		const res = await axios.post("http://localhost:8000/search/getForecast", {
 			cityId,
 		});
-		if (res !== "error") {
+		if (res.data.name !== "Error") {
 			setDaysList(res.data);
-			console.log("~ res.data", res.data);
 		} else {
-			setCityError(true);
+			setCityError(res.data.name);
 		}
 	};
-
-	const citesAutoComplete = async () => {
-		const res = await axios.get("http://localhost:8000/search/getAutoComplete");
-		if (res.data !== "error") {
-			setCitiesList(res.data);
-		} else {
-			setCityError(true);
-		}
-	};
-
-	useEffect(() => {
-	citesAutoComplete()
-	}, [])
 
 	return (
 		<div className="App">
@@ -53,8 +40,9 @@ function App() {
 				error={cityError}
 				setCityError={setCityError}
 				CitiesList={CitiesList}
+				setCitiesList={setCitiesList}
 			/>
-			<Cards weatherData={daysList}/>
+			<Cards weatherData={daysList} />
 		</div>
 	);
 }
