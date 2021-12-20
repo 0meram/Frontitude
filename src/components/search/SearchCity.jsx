@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button, TextField } from "@material-ui/core";
 import Autocomplete from "@mui/material/Autocomplete";
 import axios from "axios";
+import CardActions from "@material-ui/core/CardActions";
+import IconButton from "@material-ui/core/IconButton";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import { UserContext } from "../lib/context/useContext";
 
 export default function SearchBar({
 	cityChange,
@@ -9,9 +13,12 @@ export default function SearchBar({
 	setCityError,
 	CitiesList,
 	setCitiesList,
+	currentWether,
 }) {
-	const [text, setText] = useState("h");
+	const [text, setText] = useState("tel aviv");
 	const newArr = [];
+	const data = useContext(UserContext);
+	const [favBtnColor, setFavBtnColor] = useState("none");
 
 	const citesAutoComplete = async (input) => {
 		const res = await axios.post(
@@ -28,24 +35,54 @@ export default function SearchBar({
 		}
 	};
 
+	const saveFavorite = (e) => {
+		setFavBtnColor("secondary");
+		data.favorites.push({
+			city: text,
+			text: currentWether[0].WeatherText,
+			temp: currentWether[0].Temperature.Imperial.Value,
+			unit: currentWether[0].Temperature.Imperial.Unit,
+		});
+	};
+
 	useEffect(() => {
-		citesAutoComplete(text);
+		citesAutoComplete("h");
+		cityChange("Tel aviv");
 	}, []);
 
 	return (
-		<div style={{ display: "flex", justifyContent: "center" }}>
-			<Autocomplete
-				options={CitiesList}
-				autoHighlight
-				sx={{ width: 300 }}
-				renderInput={(params) => <TextField {...params} />}
-				onInputChange={(e) => {
-					setText(e.target.innerText || e.target.value || "h");
-					citesAutoComplete(e.target.innerText || e.target.value || "h");
-				}}
-			/>
-			<Button onClick={() => cityChange(text)}>Search</Button>
-			{error}
+		<div>
+			<CardActions disableSpacing>
+				Like
+				<IconButton
+					aria-label="add to favorites"
+					color={favBtnColor}
+					onClick={(e) => saveFavorite(e)}
+				>
+					<FavoriteIcon />
+				</IconButton>
+			</CardActions>
+			<div style={{ display: "flex", justifyContent: "center" }}>
+				<Autocomplete
+					options={CitiesList}
+					autoHighlight
+					sx={{ width: 300 }}
+					renderInput={(params) => <TextField {...params} />}
+					onInputChange={(e) => {
+						setText(e.target.innerText || e.target.value || "h");
+						citesAutoComplete(e.target.innerText || e.target.value || "h");
+					}}
+				/>
+				<Button
+					onClick={() => {
+						cityChange(text);
+						setFavBtnColor("none");
+					}}
+				>
+					Search
+				</Button>
+			</div>
+			<h1>{text}</h1>
 		</div>
 	);
 }

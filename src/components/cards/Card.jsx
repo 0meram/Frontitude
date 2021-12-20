@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Card, makeStyles, Grid, Button } from "@material-ui/core/";
 import cx from "classnames";
 import styles from "./card.css";
 
 const useStyles = makeStyles({
 	root: {
-		width: 135,
-		margin: 10,
+		width: 155,
+		margin: 5,
+		overflow: "hidden",
+	},
+	card: {
+		width: 555,
+		margin: "auto",
 		overflow: "hidden",
 	},
 });
@@ -20,10 +25,16 @@ export default function Cards(props) {
 		setMeasure(!measure);
 	};
 
-	if (!props.weatherData) return "Loading..";
+	if (!props.currentWether) return "Loading..";
 
 	return (
 		<div>
+				{/* <h1>{props.currentWether[0].WeatherText}</h1>
+				<h2>
+					{props.currentWether[0].Temperature.Imperial.Value}
+					{"  "}
+					{props.currentWether[0].Temperature.Imperial.Unit}
+				</h2> */}
 			<div style={{ display: "flex", justifyContent: "center" }}>
 				{days.map((day) => {
 					return <h4 style={{ margin: 45 }}>{day}</h4>;

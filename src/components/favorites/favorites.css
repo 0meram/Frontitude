@@ -1,0 +1,17 @@
+.my-pet-list {
+	display: grid;
+	grid-template-columns: repeat(4, 220px);
+	align-items: center;
+	justify-content: center;
+}
+.my-pets {
+	margin-top: 100px;
+}
+.parallax {
+	/* background-image: url("../../lib/images/bg.jpg"); */
+	min-height: 500px;
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
