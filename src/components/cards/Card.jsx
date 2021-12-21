@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Card, makeStyles, Grid, Button } from "@material-ui/core/";
 import cx from "classnames";
 import styles from "./card.css";
@@ -25,16 +25,15 @@ export default function Cards(props) {
 		setMeasure(!measure);
 	};
 
-	if (!props.currentWether) return "Loading..";
-
 	return (
 		<div>
-				{/* <h1>{props.currentWether[0].WeatherText}</h1>
-				<h2>
-					{props.currentWether[0].Temperature.Imperial.Value}
-					{"  "}
-					{props.currentWether[0].Temperature.Imperial.Unit}
-				</h2> */}
+			<h1>
+				{props.text}
+				{"  "}
+				{props.value}
+				{"  "}
+				{props.unit}
+			</h1>
 			<div style={{ display: "flex", justifyContent: "center" }}>
 				{days.map((day) => {
 					return <h4 style={{ margin: 45 }}>{day}</h4>;

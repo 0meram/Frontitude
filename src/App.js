@@ -10,12 +10,15 @@ import { UserContext } from "./components/lib/context/useContext";
 import ClipLoader from "react-spinners/ClipLoader";
 
 function App() {
-	const [cityError, setCityError] = useState(false);
+	const [cityError, setCityError] = useState("");
 	const [daysList, setDaysList] = useState([]);
 	const [CitiesList, setCitiesList] = useState([]);
 	const [favorites, setFavorites] = useState([]);
 	const [currentWether, setCurrentWether] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [currentText, setCurrentText] = useState("")
+	const [currentValue, setCurrentValue] = useState("")
+	const [currentF, setCurrentF] = useState("")
 
 	const cityChange = async (inputChange) => {
 		setLoading(true);
@@ -23,10 +26,10 @@ function App() {
 			inputChange,
 		});
 		if (res.data !== "error") {
-			handleCityChange(res.data);
-			getCurrentWether(res.data);
+			await getCurrentWether(res.data);
+			await handleCityChange(res.data);
 		} else {
-			setCityError(true);
+			setCityError("something went wrong");
 		}
 	};
 
@@ -37,7 +40,7 @@ function App() {
 		if (res.data.name !== "Error") {
 			setDaysList(res.data);
 		} else {
-			setCityError(res.data.name);
+			setCityError("something went wrong, try again!");
 		}
 	};
 
@@ -48,10 +51,20 @@ function App() {
 				cityId,
 			}
 		);
-		if (res.data !== "error") 
-			setCurrentWether(res.data);
+		if (res.data !== "error") {
 			setLoading(false);
+			setCurrentWether(res.data);
+			setCurrentText(res.data[0].WeatherText);
+			setCurrentValue(res.data[0].Temperature.Imperial.Value);
+			setCurrentF(res.data[0].Temperature.Imperial.Unit);
+		} else {
+			setCityError("something went wrong, try again!");
+		}
 	};
+
+	useEffect(() => {
+		cityChange("Tel aviv");
+	}, []);
 
 	return (
 		<Router>
@@ -76,7 +89,12 @@ function App() {
 							{loading && (
 								<ClipLoader color="black" loading={true} css="" size={100} />
 							)}
-							<Cards weatherData={daysList} currentWether={currentWether} />
+							<Cards
+								weatherData={daysList}
+								text={currentText}
+								value={currentValue}
+								unit={currentF}
+							/>
 						</Route>
 						<Route exact path="/favorites">
 							<Favorites />

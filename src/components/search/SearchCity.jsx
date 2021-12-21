@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Button, TextField } from "@material-ui/core";
 import Autocomplete from "@mui/material/Autocomplete";
 import axios from "axios";
@@ -15,7 +15,7 @@ export default function SearchBar({
 	setCitiesList,
 	currentWether,
 }) {
-	const [text, setText] = useState("tel aviv");
+	const [text, setText] = useState("Tel aviv");
 	const newArr = [];
 	const data = useContext(UserContext);
 	const [favBtnColor, setFavBtnColor] = useState("none");
@@ -31,7 +31,7 @@ export default function SearchBar({
 			}
 			return setCitiesList(newArr);
 		} else {
-			setCityError(true);
+			setCityError("something went wrong, try again!");
 		}
 	};
 
@@ -45,13 +45,9 @@ export default function SearchBar({
 		});
 	};
 
-	useEffect(() => {
-		citesAutoComplete("h");
-		cityChange("Tel aviv");
-	}, []);
-
 	return (
 		<div>
+			{error}
 			<CardActions disableSpacing>
 				Like
 				<IconButton
