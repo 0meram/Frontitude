@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Card, makeStyles, Grid, Button } from "@material-ui/core/";
-import cx from "classnames";
-import styles from "./card.css";
 
 const useStyles = makeStyles({
 	root: {
@@ -44,7 +42,6 @@ export default function Cards(props) {
 				direction="row"
 				justify="center"
 				alignItems="center"
-				className={cx(styles.container)}
 			>
 				{props.weatherData.map((item) => {
 					return (

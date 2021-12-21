@@ -18,12 +18,12 @@ export default function Favorites() {
 
 	return (
 		<Grid container component="main" className={classes.root}>
-			<Grid item xs={true} sm={12} md={12} className="parallaxp">
-				<div className="my-pets">
+			<Grid item xs={true} sm={12} md={12} className="parallax">
+				<div className="my-cities">
 					<h1>
 						My favorites Cities <FavoriteIcon />
 					</h1>
-					<div className="my-pet-list">
+					<div className="my-cities-list">
 						{data.favorites.map((fav, i) => (
 							<FavCard fav={fav} key={i} />
 						))}
