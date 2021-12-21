@@ -16,13 +16,13 @@ function App() {
 	const [favorites, setFavorites] = useState([]);
 	const [currentWether, setCurrentWether] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const [currentText, setCurrentText] = useState("")
-	const [currentValue, setCurrentValue] = useState("")
-	const [currentF, setCurrentF] = useState("")
+	const [currentText, setCurrentText] = useState("");
+	const [currentValue, setCurrentValue] = useState("");
+	const [currentF, setCurrentF] = useState("");
 
 	const cityChange = async (inputChange) => {
 		setLoading(true);
-		const res = await axios.post("https://herolo-back.herokuapp.com/search/getCity", {
+		const res = await axios.post("http://herolo-wether-server.herokuapp.com/search/getCity", {
 			inputChange,
 		});
 		if (res.data !== "error") {
@@ -34,7 +34,7 @@ function App() {
 	};
 
 	const handleCityChange = async (cityId) => {
-		const res = await axios.post("https://herolo-back.herokuapp.com/search/getForecast", {
+		const res = await axios.post("http://herolo-wether-server.herokuapp.com/search/getForecast", {
 			cityId,
 		});
 		if (res.data.name !== "Error") {
@@ -46,7 +46,7 @@ function App() {
 
 	const getCurrentWether = async (cityId) => {
 		const res = await axios.post(
-			"https://herolo-back.herokuapp.com/search/getCurrentWether",
+			"http://herolo-wether-server.herokuapp.com/search/getCurrentWether",
 			{
 				cityId,
 			}

@@ -22,7 +22,7 @@ export default function SearchBar({
 
 	const citesAutoComplete = async (input) => {
 		const res = await axios.post(
-			"https://herolo-back.herokuapp.com/search/getAutoComplete",
+			"https://herolo-wether-server.herokuapp.com/search/getAutoComplete",
 			{ input }
 		);
 		if (res.data.name !== "Error") {
