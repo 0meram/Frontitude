@@ -48,21 +48,21 @@ export default function SearchBar({
 	return (
 		<div>
 			{error}
-			<CardActions disableSpacing>
-				Like
-				<IconButton
-					aria-label="add to favorites"
-					color={favBtnColor}
-					onClick={(e) => saveFavorite(e)}
-				>
-					<FavoriteIcon />
-				</IconButton>
-			</CardActions>
-			<div style={{ display: "flex", justifyContent: "center" }}>
+			<div style={{ display: "flex", justifyContent: "center", marginTop: 70 }}>
+				<CardActions disableSpacing>
+					Save
+					<IconButton
+						aria-label="add to favorites"
+						color={favBtnColor}
+						onClick={(e) => saveFavorite(e)}
+					>
+						<FavoriteIcon />
+					</IconButton>
+				</CardActions>
 				<Autocomplete
 					options={CitiesList}
 					autoHighlight
-					sx={{ width: 300 }}
+					sx={{ width: 250 }}
 					renderInput={(params) => <TextField {...params} />}
 					onInputChange={(e) => {
 						setText(e.target.innerText || e.target.value || "h");
@@ -70,6 +70,9 @@ export default function SearchBar({
 					}}
 				/>
 				<Button
+					variant="outlined"
+					color="primary"
+					style={{ margin: 10 }}
 					onClick={() => {
 						cityChange(text);
 						setFavBtnColor("none");

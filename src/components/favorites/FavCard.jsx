@@ -42,6 +42,7 @@ export default function FavCard(props) {
 							{props.fav.temp} {props.fav.unit}
 						</b>
 						<Button
+							color="secondary"
 							size="small"
 							variant="outlined"
 							onClick={() => handleRemove(props.fav)}

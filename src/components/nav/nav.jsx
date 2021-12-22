@@ -12,8 +12,8 @@ export default function ButtonAppBar() {
 			<AppBar position="static">
 				<Toolbar className="nav">
 					<h1>Herolo Wether</h1>
-					<Button color="inherit">
-						<Link to="/">Forcast</Link>
+					<Button color="inherit" >
+						<Link to="/">Forecast</Link>
 					</Button>
 					<Button color="inherit">
 						<Link to="/favorites">Favorites</Link>

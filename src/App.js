@@ -22,9 +22,12 @@ function App() {
 
 	const cityChange = async (inputChange) => {
 		setLoading(true);
-		const res = await axios.post("http://herolo-wether-server.herokuapp.com/search/getCity", {
-			inputChange,
-		});
+		const res = await axios.post(
+			"http://herolo-wether-server.herokuapp.com/search/getCity",
+			{
+				inputChange,
+			}
+		);
 		if (res.data !== "error") {
 			await getCurrentWether(res.data);
 			await handleCityChange(res.data);
@@ -34,9 +37,12 @@ function App() {
 	};
 
 	const handleCityChange = async (cityId) => {
-		const res = await axios.post("http://herolo-wether-server.herokuapp.com/search/getForecast", {
-			cityId,
-		});
+		const res = await axios.post(
+			"http://herolo-wether-server.herokuapp.com/search/getForecast",
+			{
+				cityId,
+			}
+		);
 		if (res.data.name !== "Error") {
 			setDaysList(res.data);
 		} else {
