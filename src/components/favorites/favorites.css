@@ -7,11 +7,9 @@
 .my-cities {
 	margin-top: 100px;
 }
-.parallax {
-	background-image: url("../lib/images/bg.jpg");
-	min-height: 500px;
-	background-attachment: fixed;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
+
+@media only screen and (max-width: 600px) {
+  .my-cities-list {
+	grid-template-columns: repeat(2, 170px);
+}
 }

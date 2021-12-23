@@ -6,7 +6,6 @@ const useStyles = makeStyles({
 		width: 155,
 		maxWidth: 155,
 		margin: 5,
-		overflow: "hidden",
 	},
 });
 
@@ -35,17 +34,13 @@ export default function Cards(props) {
 					</h3>
 				)}
 			</h1>
-			<div style={{ display: "flex", justifyContent: "center" }}>
-				{days.map((day) => {
-					return <h4 style={{ marginLeft: 50, marginRight: 50 }}>{day}</h4>;
-				})}
-			</div>
 			<Grid container direction="row" justify="center" alignItems="center">
-				{props.weatherData.map((item) => {
+				{props.weatherData.map((item, index) => {
 					return (
-						<Card className={classes.root} key={item.Date}>
-							<div>{item.Day.IconPhrase}</div>
-							<div>
+						<div>
+							<h3>{days[index]}</h3>
+							<Card className={classes.root} key={item.Date}>
+								<h5>{item.Day.IconPhrase}</h5>
 								{measure ? (
 									<h3>
 										{item.Temperature.Maximum.Value}
@@ -60,8 +55,8 @@ export default function Cards(props) {
 										{" °C"}
 									</h3>
 								)}
-							</div>
-						</Card>
+							</Card>
+						</div>
 					);
 				})}
 			</Grid>

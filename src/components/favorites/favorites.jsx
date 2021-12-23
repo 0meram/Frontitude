@@ -5,6 +5,7 @@ import { UserContext } from "../lib/context/useContext";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavCard from "./FavCard";
 import "./favorites.css";
+import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles(() => ({
 	root: {
@@ -24,9 +25,11 @@ export default function Favorites() {
 						My favorites Cities <FavoriteIcon />
 					</h1>
 					<div className="my-cities-list">
-						{data.favorites.map((fav, i) => (
-							<FavCard fav={fav} key={i} />
-						))}
+						{data.favorites.map(
+							(fav) => (
+								<FavCard fav={fav} id={uuidv4()} />
+							)
+						)}
 					</div>
 				</div>
 			</Grid>

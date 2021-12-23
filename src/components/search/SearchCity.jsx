@@ -70,7 +70,7 @@ export default function SearchBar({
 					}}
 				/>
 				<Button
-					variant="outlined"
+					variant="contained"
 					color="primary"
 					style={{ margin: 10 }}
 					onClick={() => {
